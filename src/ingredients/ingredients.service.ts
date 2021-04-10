@@ -58,16 +58,27 @@ export class IngredientsService {
     }
     return true;
   }
+  async existIngredient(id: string){
+    let ingredient;
+    try {
+      ingredient = await this.ingredientModel.findById(id).exec();
+    } catch (error) {
+      console.log('Could not find ingredient. 3');
+    }
+    if (!ingredient) {
+      console.log('Could not find ingredient. 4');
+    }
+  }
 
   private async findIngredient(id: string): Promise<Ingredient> {
     let ingredient;
     try {
       ingredient = await this.ingredientModel.findById(id).exec();
     } catch (error) {
-      throw new NotFoundException('Could not find ingredient.');
+      throw new NotFoundException('Could not find ingredient.1');
     }
     if (!ingredient) {
-      throw new NotFoundException('Could not find ingredient.');
+      throw new NotFoundException('Could not find ingredient.2');
     }
     return ingredient;
   }

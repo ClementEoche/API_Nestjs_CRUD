@@ -6,10 +6,9 @@ import { RecipesService } from './recipe.service';
 import { RecipesSchema } from './recipe.model';
 import { IngredientsService } from 'src/ingredients/ingredients.service';
 import { IngredientsModule } from 'src/ingredients/ingredients.module';
-import { IngredientsSchema } from 'src/ingredients/ingredients.model';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'Ingredients', schema: IngredientsSchema }]), MongooseModule.forFeature([{ name: 'Recipe', schema: RecipesSchema }])],
+  imports: [IngredientsModule, MongooseModule.forFeature([{ name: 'Recipe', schema: RecipesSchema }])],
   controllers: [RecipeController],
   providers: [RecipesService]
 })

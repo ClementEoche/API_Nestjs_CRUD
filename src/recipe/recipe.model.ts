@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import { Ingredient, IngredientsSchema } from 'src/ingredients/ingredients.model';
+import {IngredientsSchema } from 'src/ingredients/ingredients.model';
 
 
 export const RecipesSchema = new mongoose.Schema({
@@ -18,5 +18,5 @@ export interface Recipe extends mongoose.Document {
   timeOfPrepa: number;
   difficultyLvl: number;
   creationDate: Date;
-  ingredients: Ingredient;
+  id_ingredient: string;
 }

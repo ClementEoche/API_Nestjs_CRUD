@@ -14,7 +14,7 @@ export class RecipeController {
         @Body('timeOfPrepa') recipeTimeOfPrepa: number,
         @Body('difficultyLvl') recipeDifficultyLvl: number,
         @Body('creationDate') recipeCreationDate: Date,
-        @Body('ingredients') recipeIngredients: Ingredient,
+        @Body('ingredients') recipeIngredientID: string,
 
     ) {
         const recipe = await this.recipeService.insertRecipe(
@@ -23,7 +23,7 @@ export class RecipeController {
           recipeTimeOfPrepa,
           recipeDifficultyLvl,
           recipeCreationDate,
-          recipeIngredients
+          recipeIngredientID
         );
         return {
             statusCode: HttpStatus.OK,
@@ -53,7 +53,7 @@ export class RecipeController {
     @Body('timeOfPrepa') recipeTimeOfPrepa: number,
     @Body('difficultyLvl') recipeDifficultyLvl: number,
     @Body('creationDate') recipeCreationDate: Date,
-    @Body('ingredients') recipeIngredients: Ingredient,
+    @Body('ingredients') recipeIngredientID: string,
   ) {
     const recipe = await this.recipeService.updateRecipe(
       recipeId,
@@ -62,7 +62,7 @@ export class RecipeController {
       recipeTimeOfPrepa,
       recipeDifficultyLvl,
       recipeCreationDate,
-      recipeIngredients
+      recipeIngredientID
     );
     return {
         statusCode: HttpStatus.OK,
