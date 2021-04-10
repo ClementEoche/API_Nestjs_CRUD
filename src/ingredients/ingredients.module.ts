@@ -6,8 +6,8 @@ import { IngredientsService } from './ingredients.service';
 import { IngredientsSchema } from './ingredients.model';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'Ingredient', schema: IngredientsSchema }])],
+  imports: [MongooseModule.forFeature([{ name: 'Ingredients', schema: IngredientsSchema }])],
   controllers: [IngredientsController],
-  providers: [IngredientsService ],
+  providers: [IngredientsService],
 })
 export class IngredientsModule {}

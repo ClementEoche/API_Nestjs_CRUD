@@ -5,7 +5,7 @@ import { Ingredient } from './ingredients.model';
 
 @Injectable()
 export class IngredientsService {
-  constructor(@InjectModel('Book') private readonly ingredientModel: Model<Ingredient>) {}
+  constructor(@InjectModel('Ingredients') private readonly ingredientModel: Model<Ingredient>) {}
 
   async insertIngredient(name: string, desc: string, price: number) {
     const newIngredient = new this.ingredientModel({

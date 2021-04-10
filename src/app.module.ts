@@ -4,12 +4,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RecipeModule } from './recipe/recipe.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
+
+import { RecipesService } from './recipe/recipe.service';
+import { IngredientsService } from './ingredients/ingredients.service';
 
 @Module({
-  imports: [RecipeModule, IngredientsModule, UsersModule, MongooseModule.forRoot('mongodb+srv://Users:<ohAjcIDRhhP7Teaa>@dbcluster.biesc.mongodb.net/DBCluster?retryWrites=true&w=majority'), AuthModule],
+  imports: [RecipeModule, IngredientsModule, MongooseModule.forRoot('mongodb+srv://Users:<ohAjcIDRhhP7Teaa>@dbcluster.biesc.mongodb.net/DBCluster?retryWrites=true&w=majority')],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, RecipesService, IngredientsService],
 })
 export class AppModule {}

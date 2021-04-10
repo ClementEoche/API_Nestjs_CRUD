@@ -4,11 +4,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { RecipeController } from './recipe.controller';
 import { RecipesService } from './recipe.service';
 import { RecipesSchema } from './recipe.model';
+import { IngredientsService } from 'src/ingredients/ingredients.service';
+import { IngredientsModule } from 'src/ingredients/ingredients.module';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'Book', schema: RecipesSchema }])],
+  imports: [IngredientsModule, MongooseModule.forFeature([{ name: 'Recipe', schema: RecipesSchema }])],
   controllers: [RecipeController],
-  providers: [RecipesService]
+  providers: [RecipesService, IngredientsService]
 })
 export class RecipeModule {}
-

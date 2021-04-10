@@ -67,7 +67,7 @@ export class RecipeController {
     return {
         statusCode: HttpStatus.OK,
         message: 'Recipe updated successfully',
-        book: recipe,
+        recipe: recipe,
     };
   }
 
