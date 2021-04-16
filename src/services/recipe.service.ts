@@ -1,29 +1,26 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { IngredientsModule } from 'src/ingredients/ingredients.module';
-import { IngredientsService } from 'src/ingredients/ingredients.service';
-import { Recipe } from './recipe.model';
+import { User } from 'src/types/user';
+import { Recipe } from '../types/recipe';
 
 
 
 @Injectable()
 export class RecipesService {
-  constructor(@InjectModel('Recipe') private readonly recipeModel: Model<Recipe>,private readonly ingredientMod: IngredientsService) {}
+  constructor(@InjectModel('Recipe') private readonly recipeModel: Model<Recipe>) {}
 
-  async insertRecipe(title: string, cookingInstruction: string, timeOfPrepa: number, difficultyLvl: number, creationDate: Date,id_ingredient: string) {
-    if(this.ingredientMod.existIngredient(id_ingredient) != null ){
+  async insertRecipe(title: string, cookingInstruction: string, timeOfPrepa: number, difficultyLvl: number, created: Date,owner: User) {
       const newRecipe = new this.recipeModel({
         title,
         cookingInstruction,
         timeOfPrepa,
         difficultyLvl,
-        creationDate,
-        id_ingredient
+        created,
+        owner
       });  
       const result = await newRecipe.save();
       return result;
-    }
   }
 
   async getRecipes() {
@@ -34,8 +31,8 @@ export class RecipesService {
       cookingInstruction: recipe.cookingInstruction,
       timeOfPrepa: recipe.timeOfPrepa ,
       difficultyLvl: recipe.difficultyLvl,
-      creationDate: recipe.creationDate,
-      id_ingredient: recipe.id_ingredient
+      created: recipe.created,
+      owner: recipe.owner
     }));
   }
 
@@ -47,12 +44,12 @@ export class RecipesService {
       cookingInstruction: recipe.cookingInstruction,
       timeOfPrepa: recipe.timeOfPrepa ,
       difficultyLvl: recipe.difficultyLvl,
-      creationDate: recipe.creationDate,
-      ingredients: recipe.id_ingredient
+      creationDate: recipe.created,
+      owner: recipe.owner
     };
   }
 
-  async updateRecipe(recipeId: string, title: string, cookingInstruction: string, timeOfPrepa: number, difficultyLvl: number, creationDate: Date,id_ingredient: string) {
+  async updateRecipe(recipeId: string, title: string, cookingInstruction: string, timeOfPrepa: number, difficultyLvl: number, created: Date,owner: User) {
     const updatedRecipe = await this.findRecipe(recipeId);
     if (title) {
       updatedRecipe.title = title;
@@ -66,11 +63,20 @@ export class RecipesService {
     if (difficultyLvl) {
       updatedRecipe.difficultyLvl = difficultyLvl;
     }
-    if (creationDate) {
-      updatedRecipe.creationDate = creationDate;
+    if (created) {
+      updatedRecipe.created = created;
     }
-    if (id_ingredient) {
-      updatedRecipe.id_ingredient = id_ingredient;
+    if (owner) {
+      updatedRecipe.owner = owner;
+    }
+    updatedRecipe.save();
+    return updatedRecipe;
+  }
+
+  async updateRecipeIngredient(recipeId: string, owner: User){
+    const updatedRecipe = await this.findRecipe(recipeId);
+    if (owner) {
+      updatedRecipe.owner.set(owner);
     }
     updatedRecipe.save();
     return updatedRecipe;

@@ -1,17 +1,19 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Ingredient } from './ingredients.model';
+import { Recipe } from 'src/types/recipe';
+import { Ingredient } from '../types/ingredient';
 
 @Injectable()
 export class IngredientsService {
   constructor(@InjectModel('Ingredients') private readonly ingredientModel: Model<Ingredient>) {}
 
-  async insertIngredient(name: string, desc: string, price: number) {
+  async insertIngredient(name: string, desc: string, price: number, owner: Recipe) {
     const newIngredient = new this.ingredientModel({
       name,
       description: desc,
       price,
+      owner,
     });
     const result = await newIngredient.save();
     return result;
@@ -24,8 +26,10 @@ export class IngredientsService {
       title: ingredient.name,
       description: ingredient.description,
       price: ingredient.price,
+      owner: ingredient.owner,
     }));
   }
+  
 
   async getSingleIngredient(ingredientId: string) {
     const ingredient= await this.findIngredient(ingredientId);
@@ -34,9 +38,10 @@ export class IngredientsService {
       title: ingredient.name,
       description: ingredient.description,
       price: ingredient.price,
+      owner: ingredient.owner,
     };
   }
-  async updateIngredient(ingredientId: string, name: string, desc: string, price: number) {
+  async updateIngredient(ingredientId: string, name: string, desc: string, price: number, owner: Recipe) {
     const updatedIngredient = await this.findIngredient(ingredientId);
     if (name) {
       updatedIngredient.name= name;
@@ -46,6 +51,9 @@ export class IngredientsService {
     }
     if (price) {
       updatedIngredient.price = price;
+    }
+    if(owner) {
+      updatedIngredient.owner = owner;
     }
     updatedIngredient.save();
     return updatedIngredient;

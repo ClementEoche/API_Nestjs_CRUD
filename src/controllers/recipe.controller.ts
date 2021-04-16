@@ -1,6 +1,6 @@
 import { Controller,Post,Body,Get,Param,Patch,Delete,HttpStatus } from '@nestjs/common';
-import { Ingredient } from 'src/ingredients/ingredients.model';
-import { RecipesService } from './recipe.service';
+import { User } from 'src/types/user';
+import { RecipesService } from '../services/recipe.service';
 
 
 @Controller('recipe')
@@ -13,8 +13,8 @@ export class RecipeController {
         @Body('cookingInstruction') recipeCookingInstruction: string,
         @Body('timeOfPrepa') recipeTimeOfPrepa: number,
         @Body('difficultyLvl') recipeDifficultyLvl: number,
-        @Body('creationDate') recipeCreationDate: Date,
-        @Body('ingredients') recipeIngredientID: string,
+        @Body('created') recipeCreationDate: Date,
+        @Body('owner') recipeOwner: User,
 
     ) {
         const recipe = await this.recipeService.insertRecipe(
@@ -23,7 +23,7 @@ export class RecipeController {
           recipeTimeOfPrepa,
           recipeDifficultyLvl,
           recipeCreationDate,
-          recipeIngredientID
+          recipeOwner,
         );
         return {
             statusCode: HttpStatus.OK,
@@ -52,8 +52,8 @@ export class RecipeController {
     @Body('cookingInstruction') recipeCookingInstruction: string,
     @Body('timeOfPrepa') recipeTimeOfPrepa: number,
     @Body('difficultyLvl') recipeDifficultyLvl: number,
-    @Body('creationDate') recipeCreationDate: Date,
-    @Body('ingredients') recipeIngredientID: string,
+    @Body('created') recipeCreationDate: Date,
+    @Body('owner') recipeOwner: User,
   ) {
     const recipe = await this.recipeService.updateRecipe(
       recipeId,
@@ -62,7 +62,7 @@ export class RecipeController {
       recipeTimeOfPrepa,
       recipeDifficultyLvl,
       recipeCreationDate,
-      recipeIngredientID
+      recipeOwner,
     );
     return {
         statusCode: HttpStatus.OK,

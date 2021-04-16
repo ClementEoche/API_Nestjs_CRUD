@@ -1,14 +1,15 @@
 import * as mongoose from 'mongoose';
 
 export const IngredientsSchema = new mongoose.Schema({
+  owner:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Recipe'
+  },
   name: { type: String, required: true },
   description: { type: String, required: true },
   price: { type: Number, required: true },
+  created:{
+    type:Date,
+    default: Date.now
+  }
 });
-
-export interface Ingredient extends mongoose.Document {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-}

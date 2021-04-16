@@ -1,47 +1,64 @@
 import { Controller,Post,Body,Get,Param,Patch,Delete,HttpStatus } from '@nestjs/common';
-import { IngredientsService } from './ingredients.service';
+import { IngredientsService } from '../services/ingredients.service';
+import { RecipesService } from '../services/recipe.service';
+import { ExecutionContext } from '@nestjs/common'
+import { Recipe } from 'src/types/recipe';
 
-@Controller('ingredients')
+@Controller('recipe/:id/ingredients')
 export class IngredientsController {
     constructor(private readonly ingredientsService: IngredientsService) {}
+    context: ExecutionContext;
+    private readonly recipeService: RecipesService;
     @Post()
     async addIngredient(
         @Body('name') ingredientName: string,
         @Body('description') ingredientDesc: string,
         @Body('price') ingredientPrice: number,
+        @Body('owner') ingredientOwner: Recipe,
     ) {
         const ingredient = await this.ingredientsService.insertIngredient(
             ingredientName,
             ingredientDesc,
             ingredientPrice,
+            ingredientOwner,    
         );
+        const request = this.context.switchToHttp().getRequest();
+        const params = request.params;
+        const id = params.id;
+        this.recipeService.updateRecipeIngredient(id , ingredient.id)
+
         return {
             statusCode: HttpStatus.OK,
             message: 'Ingredient added successfully',
             data: ingredient,
-        };
+        };    
     }
+
     @Get()
     async getAllIngredients() {
         const ingredients = await this.ingredientsService.getIngredients();
         return ingredients;
     }
+
     @Get(':id')
     getIngredient(@Param('id') ingredientId: string) {
         return this.ingredientsService.getSingleIngredient(ingredientId);
     }
+
     @Patch(':id')
     async updateIngredient(
         @Param('id') ingredientId: string,
         @Body('title') ingredientName: string,
         @Body('description') ingredientDesc: string,
         @Body('price') ingredientPrice: number,
+        @Body('owner') ingredientOwner: Recipe,
     ) {
         const ingredient = await this.ingredientsService.updateIngredient(
             ingredientId,
             ingredientName,
             ingredientDesc,
             ingredientPrice,
+            ingredientOwner,
         );
         return {
             statusCode: HttpStatus.OK,
