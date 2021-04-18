@@ -7,9 +7,10 @@ export const RecipesSchema = new mongoose.Schema({
     ref: 'User'
   },
   title: { type: String, required: true },
-  cookingInstruction:  { type: String, required: true },
-  timeOfPrepa:  { type: Number, required: true },
-  difficultyLvl:  { type: Number, required: true },
+  description:{type: String},
+  cookingInstruction: {type: String, required:true},
+  timeOfPrepa:  {type: Number, required: true},
+  difficultyLvl:  {type: Number, required: true},
   created:{
     type:Date,
     default: Date.now

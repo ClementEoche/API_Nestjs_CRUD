@@ -10,9 +10,10 @@ import { Recipe } from '../types/recipe';
 export class RecipesService {
   constructor(@InjectModel('Recipe') private readonly recipeModel: Model<Recipe>) {}
 
-  async insertRecipe(title: string, cookingInstruction: string, timeOfPrepa: number, difficultyLvl: number, created: Date,owner: User) {
+  async insertRecipe(title: string, cookingInstruction: string,description: string, timeOfPrepa: number, difficultyLvl: number, created: Date,owner: User) {
       const newRecipe = new this.recipeModel({
         title,
+        description,
         cookingInstruction,
         timeOfPrepa,
         difficultyLvl,
@@ -28,6 +29,7 @@ export class RecipesService {
     return recipe.map(recipe => ({
       id: recipe.id,
       title: recipe.title,
+      description: recipe.description,
       cookingInstruction: recipe.cookingInstruction,
       timeOfPrepa: recipe.timeOfPrepa ,
       difficultyLvl: recipe.difficultyLvl,
@@ -41,6 +43,7 @@ export class RecipesService {
     return {
       id: recipe.id,
       title: recipe.title,
+      description: recipe.description,
       cookingInstruction: recipe.cookingInstruction,
       timeOfPrepa: recipe.timeOfPrepa ,
       difficultyLvl: recipe.difficultyLvl,
@@ -49,10 +52,13 @@ export class RecipesService {
     };
   }
 
-  async updateRecipe(recipeId: string, title: string, cookingInstruction: string, timeOfPrepa: number, difficultyLvl: number, created: Date,owner: User) {
+  async updateRecipe(recipeId: string, title: string,description: string, cookingInstruction: string, timeOfPrepa: number, difficultyLvl: number, created: Date,owner: User) {
     const updatedRecipe = await this.findRecipe(recipeId);
     if (title) {
       updatedRecipe.title = title;
+    }
+    if(description) {
+      updatedRecipe.description = description;
     }
     if (cookingInstruction) {
       updatedRecipe.cookingInstruction = cookingInstruction;

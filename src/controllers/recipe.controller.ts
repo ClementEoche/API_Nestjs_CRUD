@@ -11,6 +11,7 @@ export class RecipeController {
   @Post()
     async addRecipe(
         @Body('title') recipeTitle: string,
+        @Body('description') recipeDescription: string,
         @Body('cookingInstruction') recipeCookingInstruction: string,
         @Body('timeOfPrepa') recipeTimeOfPrepa: number,
         @Body('difficultyLvl') recipeDifficultyLvl: number,
@@ -20,6 +21,7 @@ export class RecipeController {
     ) {
         const recipe = await this.recipeService.insertRecipe(
           recipeTitle,
+          recipeDescription,
           recipeCookingInstruction,
           recipeTimeOfPrepa,
           recipeDifficultyLvl,
@@ -51,6 +53,7 @@ export class RecipeController {
   async updateRecipe(
     @Param('id') recipeId: string,
     @Body('title') recipeTitle: string,
+    @Body('descriuption') recipeDescription: string,
     @Body('cookingInstruction') recipeCookingInstruction: string,
     @Body('timeOfPrepa') recipeTimeOfPrepa: number,
     @Body('difficultyLvl') recipeDifficultyLvl: number,
@@ -60,6 +63,7 @@ export class RecipeController {
     const recipe = await this.recipeService.updateRecipe(
       recipeId,
       recipeTitle,
+      recipeDescription,
       recipeCookingInstruction,
       recipeTimeOfPrepa,
       recipeDifficultyLvl,
