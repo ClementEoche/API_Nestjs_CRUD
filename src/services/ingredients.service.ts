@@ -19,17 +19,9 @@ export class IngredientsService {
     return result;
   }
 
-  async getIngredients() {
-    const ingredients = await this.ingredientModel.find().exec();
-    return ingredients.map(ingredient => ({
-      id: ingredient.id,
-      title: ingredient.name,
-      description: ingredient.description,
-      price: ingredient.price,
-      owner: ingredient.owner,
-    }));
+  async getIngredients(idrecipe) {
+    return this.ingredientModel.find({owner: idrecipe})
   }
-  
 
   async getSingleIngredient(ingredientId: string) {
     const ingredient= await this.findIngredient(ingredientId);

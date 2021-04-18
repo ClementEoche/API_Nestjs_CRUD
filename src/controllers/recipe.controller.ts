@@ -1,9 +1,10 @@
-import { Controller,Post,Body,Get,Param,Patch,Delete,HttpStatus } from '@nestjs/common';
+import { Controller,Post,Body,Get,Param,Patch,Delete,HttpStatus,UseGuards } from '@nestjs/common';
 import { User } from 'src/types/user';
+import { AuthGuard } from '@nestjs/passport';
 import { RecipesService } from '../services/recipe.service';
 
-
-@Controller('recipe')
+@UseGuards(AuthGuard('jwt'))
+@Controller('auth/recipe')
 export class RecipeController {
   constructor(private readonly recipeService: RecipesService) {}
 
@@ -31,7 +32,8 @@ export class RecipeController {
             data: recipe,
         };
     }
-
+  
+  
   @Get()
   async getAllRecipes() {   
     const recipes = await this.recipeService.getRecipes();

@@ -1,10 +1,12 @@
-import { Controller,Post,Body,Get,Param,Patch,Delete,HttpStatus } from '@nestjs/common';
+import { Controller,Post,Body,Get,Param,Patch,Delete,HttpStatus,UseGuards } from '@nestjs/common';
 import { IngredientsService } from '../services/ingredients.service';
 import { RecipesService } from '../services/recipe.service';
+import { AuthGuard } from '@nestjs/passport';
 import { ExecutionContext } from '@nestjs/common'
 import { Recipe } from 'src/types/recipe';
 
-@Controller('recipe/:id/ingredients')
+@UseGuards(AuthGuard('jwt'))
+@Controller('auth/recipe/:idrecipe/ingredients')
 export class IngredientsController {
     constructor(private readonly ingredientsService: IngredientsService) {}
     context: ExecutionContext;
@@ -34,9 +36,11 @@ export class IngredientsController {
         };    
     }
 
+    
     @Get()
-    async getAllIngredients() {
-        const ingredients = await this.ingredientsService.getIngredients();
+    async getAllIngredients(@Param('idrecipe') recipeId: string) {
+        const ingredients = await this.ingredientsService.getIngredients(recipeId);
+        
         return ingredients;
     }
 

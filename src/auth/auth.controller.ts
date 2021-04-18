@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from 'src/shared/user.service';
 import { LoginDTO, RegisterDTO } from './auth.dto';
@@ -22,6 +23,14 @@ export class AuthController {
             name : user.name,
         }
         const token = await this.authService.signPayload(payload);
+        return {user, token};
+    }
+
+    @Get('logout')
+    async logout(@Body() userDTO: LoginDTO){ 
+
+        const user = undefined;
+        const token = 0;
         return {user, token};
     }
 
