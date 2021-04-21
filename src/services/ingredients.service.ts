@@ -38,8 +38,8 @@ export class IngredientsService {
     if (name) {
       updatedIngredient.name= name;
     }
-    if (desc) {
-      updatedIngredient.description = desc;
+    if (description) {
+      updatedIngredient.description = description;
     }
     if (price) {
       updatedIngredient.price = price;
