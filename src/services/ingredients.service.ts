@@ -8,10 +8,10 @@ import { Ingredient } from '../types/ingredient';
 export class IngredientsService {
   constructor(@InjectModel('Ingredients') private readonly ingredientModel: Model<Ingredient>) {}
 
-  async insertIngredient(name: string, desc: string, price: number, owner: Recipe) {
+  async insertIngredient(name: string, description: string, price: number, owner: Recipe) {
     const newIngredient = new this.ingredientModel({
       name,
-      desc,
+      description,
       price,
       owner,
     });
@@ -28,12 +28,12 @@ export class IngredientsService {
     return {
       id: ingredient.id,
       title: ingredient.name,
-      description: ingredient.desc,
+      description: ingredient.description,
       price: ingredient.price,
       owner: ingredient.owner,
     };
   }
-  async updateIngredient(ingredientId: string, name: string, desc: string, price: number, owner: Recipe) {
+  async updateIngredient(ingredientId: string, name: string, description: string, price: number, owner: Recipe) {
     const updatedIngredient = await this.findIngredient(ingredientId);
     if (name) {
       updatedIngredient.name= name;
