@@ -11,7 +11,7 @@ export class IngredientsService {
   async insertIngredient(name: string, desc: string, price: number, owner: Recipe) {
     const newIngredient = new this.ingredientModel({
       name,
-      description: desc,
+      desc,
       price,
       owner,
     });
@@ -28,7 +28,7 @@ export class IngredientsService {
     return {
       id: ingredient.id,
       title: ingredient.name,
-      description: ingredient.description,
+      description: ingredient.desc,
       price: ingredient.price,
       owner: ingredient.owner,
     };
