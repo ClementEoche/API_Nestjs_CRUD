@@ -27,7 +27,7 @@ export class IngredientsService {
     const ingredient= await this.findIngredient(ingredientId);
     return {
       id: ingredient.id,
-      title: ingredient.name,
+      name: ingredient.name,
       description: ingredient.description,
       price: ingredient.price,
       owner: ingredient.owner,
