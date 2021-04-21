@@ -47,7 +47,7 @@ export class IngredientsController {
     @Patch(':id')
     async updateIngredient(
         @Param('id') ingredientId: string,
-        @Body('title') ingredientName: string,
+        @Body('name') ingredientName: string,
         @Body('description') ingredientDesc: string,
         @Body('price') ingredientPrice: number,
         @Body('owner') ingredientOwner: Recipe,
