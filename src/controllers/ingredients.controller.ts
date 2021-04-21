@@ -24,11 +24,6 @@ export class IngredientsController {
             ingredientPrice,
             ingredientOwner,    
         );
-        const request = this.context.switchToHttp().getRequest();
-        const params = request.params;
-        const id = params.id;
-        this.recipeService.updateRecipeIngredient(id , ingredient.id)
-
         return {
             statusCode: HttpStatus.OK,
             message: 'Ingredient added successfully',
